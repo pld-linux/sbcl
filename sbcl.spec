@@ -7,7 +7,7 @@ License:	MIT
 Group:		Development/Languages
 Source0:	http://dl.sourceforge.net/sbcl/%{name}-%{version}-source.tar.bz2
 # Source0-md5:	884771bd1ac26bc78c897ae6510541d9
-URL:		http://sbcl.sourceforge.net
+URL:		http://sbcl.sourceforge.net/
 BuildRequires:	sbcl
 BuildRequires:	docbook-utils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
