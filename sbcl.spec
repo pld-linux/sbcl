@@ -5,7 +5,7 @@ Version:	0.7.12
 Release:	1
 License:	MIT
 Group:		Development/Languages
-Source:		http://prdownloads.sourceforge.net/sbcl/%{name}-%{version}-source.tar.bz2
+Source:		http://dl.sourceforge.net/sbcl/%{name}-%{version}-source.tar.bz2
 URL:		http://sbcl.sourceforge.net
 BuildRequires:	sbcl
 BuildRequires:	docbook-utils
@@ -17,9 +17,9 @@ for Common Lisp based on CMUCL. It includes an integrated native compiler,
 interpreter, and debugger.
 
 %description -l pl
-Steel Bank Common Lisp (SBCL) is a Open Source development environment
-for Common Lisp based on CMUCL. It includes an integrated native compiler,
-interpreter, and debugger.
+Steel Bank Common Lisp (SBCL) to ¶rodowisko programistyczne Open
+Source dla Common Lispa oparte na CMUCL. Zawiera zintegrowany natywny
+kompilator, interpreter i debugger.
 
 %prep
 %setup -q
