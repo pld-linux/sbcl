@@ -1,12 +1,12 @@
 Summary:	The Steel Bank Common Lisp development environment
 Summary(pl):	¦rodowisko programowania Steel Bank Common Lisp
 Name:		sbcl
-Version:	0.8.1
+Version:	0.8.2
 Release:	1
 License:	MIT
 Group:		Development/Languages
 Source0:	http://dl.sourceforge.net/sbcl/%{name}-%{version}-source.tar.bz2
-# Source0-md5:	884771bd1ac26bc78c897ae6510541d9
+# Source0-md5:	1a2a9e0ac21cdd3fb087a3406a78b3dc
 URL:		http://sbcl.sourceforge.net/
 BuildRequires:	sbcl
 BuildRequires:	docbook-utils
