@@ -5,7 +5,8 @@ Version:	0.7.12
 Release:	1
 License:	MIT
 Group:		Development/Languages
-Source:		http://dl.sourceforge.net/sbcl/%{name}-%{version}-source.tar.bz2
+Source0:	http://dl.sourceforge.net/sbcl/%{name}-%{version}-source.tar.bz2
+# Source0-md5:	16f47c4b941cae0375a3cf1ee87761e9
 URL:		http://sbcl.sourceforge.net
 BuildRequires:	sbcl
 BuildRequires:	docbook-utils
