@@ -5,7 +5,7 @@ Version:	0.9.0
 Release:	1
 License:	MIT
 Group:		Development/Languages
-Source0:	%{name}-%{version}-source.tar.bz2
+Source0:	http://dl.sourceforge.net/sbcl/%{name}-%{version}-source.tar.bz2
 # Source0-md5:	9544e79998980bfc1f555cfb900399d7
 Patch0:		%{name}-home.patch
 Patch1:		%{name}-gcc4.patch
