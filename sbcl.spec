@@ -93,6 +93,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr (755,root,root) %{_bindir}/sbcl
 %{_libdir}/sbcl
 %{_mandir}/man1/*
+%dir %{_docdir}/%{name}-%{version}
 %{_docdir}/%{name}-%{version}/BUGS
 %{_docdir}/%{name}-%{version}/COPYING
 %{_docdir}/%{name}-%{version}/CREDITS
