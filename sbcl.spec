@@ -35,7 +35,6 @@ Steel Bank Common Lisp (SBCL) to ¶rodowisko programistyczne Open
 Source dla Common Lispa oparte na CMUCL. Zawiera zintegrowany natywny
 kompilator, interpreter i debugger.
 
-%if %{with doc}
 %package doc-info
 Summary:	The Steel Bank Common Lisp documentation (info)
 Summary(pl):	Dokumentacja Steel Bank Common Lisp (info)
@@ -68,7 +67,6 @@ Documentation of Steel Bank Common Lisp (SBCL) in PDF format.
 
 %description doc-pdf -l pl
 Dokumentacja Steel Bank Common Lisp (SBCL) w formacie PDF.
-%endif
 
 %prep
 %setup -q
@@ -101,15 +99,11 @@ cp README PRINCIPLES TODO $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%if %{with doc}
 %post doc-info
-/sbin/ldconfig
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %postun doc-info
-/sbin/ldconfig
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
-%endif
 
 %files
 %defattr(644,root,root,755)
