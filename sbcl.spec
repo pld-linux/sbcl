@@ -7,12 +7,13 @@ Summary:	The Steel Bank Common Lisp development environment
 Summary(pl):	¦rodowisko programowania Steel Bank Common Lisp
 Name:		sbcl
 Version:	0.9.10
-Release:	1
+Release:	2
 License:	MIT
 Group:		Development/Languages
 Source0:	http://dl.sourceforge.net/sbcl/%{name}-%{version}-source.tar.bz2
 # Source0-md5:	58678d7081f32bdcd174c5233efba4f3
 Patch0:		%{name}-home.patch
+Patch1:		%{name}-threads.patch
 URL:		http://sbcl.sourceforge.net/
 %if %{with clisp}
 BuildRequires:	clisp
@@ -71,6 +72,9 @@ Dokumentacja Steel Bank Common Lisp (SBCL) w formacie PDF.
 %prep
 %setup -q
 %patch0 -p1
+%ifarch %{ix86} %{x8664}
+%patch1 -p1
+%endif
 
 %if %{with clisp}
 %define bootstrap_cl "clisp"
