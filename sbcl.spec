@@ -3,22 +3,27 @@
 %bcond_without	doc		# build without documentation
 %bcond_with	clisp		# build using clisp instead of sbcl
 #
+# To build with an unpackaged Common Lisp implementation,
+# pass --define bootstrap_cl /path/to/lisp/binary to builder.
+#
 Summary:	The Steel Bank Common Lisp development environment
 Summary(pl):	¦rodowisko programowania Steel Bank Common Lisp
 Name:		sbcl
-Version:	0.9.10
-Release:	2
+Version:	1.0.2
+Release:	1
 License:	MIT
 Group:		Development/Languages
 Source0:	http://dl.sourceforge.net/sbcl/%{name}-%{version}-source.tar.bz2
-# Source0-md5:	58678d7081f32bdcd174c5233efba4f3
+# Source0-md5:	f94b51748e9805687759b5b924f45671
 Patch0:		%{name}-home.patch
 Patch1:		%{name}-threads.patch
 URL:		http://sbcl.sourceforge.net/
+%if %{undefined bootstrap_cl}
 %if %{with clisp}
 BuildRequires:	clisp
 %else
 BuildRequires:	sbcl
+%endif
 %endif
 %if %{with doc}
 BuildRequires:	tetex-dvips
@@ -76,10 +81,12 @@ Dokumentacja Steel Bank Common Lisp (SBCL) w formacie PDF.
 %patch1 -p1
 %endif
 
+%if %{undefined bootstrap_cl}
 %if %{with clisp}
 %define bootstrap_cl "clisp"
 %else
 %define bootstrap_cl "sbcl --disable-debugger"
+%endif
 %endif
 
 %build
@@ -94,35 +101,43 @@ make -C doc/manual
 
 %install
 rm -rf $RPM_BUILD_ROOT
-unset SBCL_HOME
-BUILD_ROOT=$RPM_BUILD_ROOT INSTALL_ROOT=%{_prefix} \
-MAN_DIR=%{_mandir} INFO_DIR=%{_infodir} DOC_DIR=%{_docdir}/%{name}-%{version} \
-sh ./install.sh
-cp README PRINCIPLES TODO $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+mkdir -p $RPM_BUILD_ROOT%{_bindir} $RPM_BUILD_ROOT%{_libdir} \
+    $RPM_BUILD_ROOT%{_mandir} $RPM_BUILD_ROOT%{_infodir} \
+    $RPM_BUILD_ROOT/etc/env.d
+env -u SBCL_HOME INSTALL_ROOT=`pwd`/_install %{_buildshell} ./install.sh
+mv _install/lib/sbcl $RPM_BUILD_ROOT%{_libdir}/%{name}
+mv _install/bin/sbcl $RPM_BUILD_ROOT%{_bindir}/%{name}
+mv _install/share/man/* $RPM_BUILD_ROOT%{_mandir}
+%if %{with doc}
+mv _install/share/info/*.info* $RPM_BUILD_ROOT%{_infodir}
+%endif
+
+echo SBCL_HOME=%{_libdir}/%{name} > $RPM_BUILD_ROOT/etc/env.d/SBCL_HOME
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post
+%env_update
+
+%postun
+%env_update
+
+%if %{with doc}
 %post doc-info
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %postun doc-info
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+%endif
 
 %files
 %defattr(644,root,root,755)
-%attr (755,root,root) %{_bindir}/sbcl
-%{_libdir}/sbcl
+%doc _install/share/doc/sbcl/[A-Z]*
+%attr (755,root,root) %{_bindir}/%{name}
+%{_libdir}/%{name}
 %{_mandir}/man1/*
-%dir %{_docdir}/%{name}-%{version}
-%{_docdir}/%{name}-%{version}/BUGS
-%{_docdir}/%{name}-%{version}/COPYING
-%{_docdir}/%{name}-%{version}/CREDITS
-%{_docdir}/%{name}-%{version}/NEWS
-%{_docdir}/%{name}-%{version}/PRINCIPLES
-%{_docdir}/%{name}-%{version}/README
-%{_docdir}/%{name}-%{version}/SUPPORT
-%{_docdir}/%{name}-%{version}/TODO
+%config(noreplace,missingok) %verify(not md5 mtime size) /etc/env.d/*
 
 %if %{with doc}
 %files doc-info
@@ -131,9 +146,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files doc-html
 %defattr(644,root,root,755)
-%{_docdir}/%{name}-%{version}/html
+%doc _install/share/doc/sbcl/html/*
 
 %files doc-pdf
 %defattr(644,root,root,755)
-%{_docdir}/%{name}-%{version}/*.pdf
+%doc _install/share/doc/sbcl/*.pdf
 %endif
