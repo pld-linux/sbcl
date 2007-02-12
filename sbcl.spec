@@ -7,7 +7,7 @@
 # pass --define bootstrap_cl /path/to/lisp/binary to builder.
 #
 Summary:	The Steel Bank Common Lisp development environment
-Summary(pl.UTF-8):   Środowisko programowania Steel Bank Common Lisp
+Summary(pl.UTF-8):	Środowisko programowania Steel Bank Common Lisp
 Name:		sbcl
 Version:	1.0.2
 Release:	1
@@ -43,7 +43,7 @@ kompilator, interpreter i debugger.
 
 %package doc-info
 Summary:	The Steel Bank Common Lisp documentation (info)
-Summary(pl.UTF-8):   Dokumentacja Steel Bank Common Lisp (info)
+Summary(pl.UTF-8):	Dokumentacja Steel Bank Common Lisp (info)
 Group:		Development/Languages
 
 %description doc-info
@@ -54,7 +54,7 @@ Dokumentacja Steel Bank Common Lisp (SBCL) w formacie info.
 
 %package doc-html
 Summary:	The Steel Bank Common Lisp documentation (HTML)
-Summary(pl.UTF-8):   Dokumentacja Steel Bank Common Lisp (HTML)
+Summary(pl.UTF-8):	Dokumentacja Steel Bank Common Lisp (HTML)
 Group:		Development/Languages
 
 %description doc-html
@@ -65,7 +65,7 @@ Dokumentacja Steel Bank Common Lisp (SBCL) w formacie HTML.
 
 %package doc-pdf
 Summary:	The Steel Bank Common Lisp documentation (PDF)
-Summary(pl.UTF-8):   Dokumentacja Steel Bank Common Lisp (PDF)
+Summary(pl.UTF-8):	Dokumentacja Steel Bank Common Lisp (PDF)
 Group:		Development/Languages
 
 %description doc-pdf
