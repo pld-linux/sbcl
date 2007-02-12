@@ -7,7 +7,7 @@
 # pass --define bootstrap_cl /path/to/lisp/binary to builder.
 #
 Summary:	The Steel Bank Common Lisp development environment
-Summary(pl):	¦rodowisko programowania Steel Bank Common Lisp
+Summary(pl.UTF-8):   Åšrodowisko programowania Steel Bank Common Lisp
 Name:		sbcl
 Version:	1.0.2
 Release:	1
@@ -36,42 +36,42 @@ Steel Bank Common Lisp (SBCL) is a Open Source development environment
 for Common Lisp based on CMUCL. It includes an integrated native compiler,
 interpreter, and debugger.
 
-%description -l pl
-Steel Bank Common Lisp (SBCL) to ¶rodowisko programistyczne Open
+%description -l pl.UTF-8
+Steel Bank Common Lisp (SBCL) to Å›rodowisko programistyczne Open
 Source dla Common Lispa oparte na CMUCL. Zawiera zintegrowany natywny
 kompilator, interpreter i debugger.
 
 %package doc-info
 Summary:	The Steel Bank Common Lisp documentation (info)
-Summary(pl):	Dokumentacja Steel Bank Common Lisp (info)
+Summary(pl.UTF-8):   Dokumentacja Steel Bank Common Lisp (info)
 Group:		Development/Languages
 
 %description doc-info
 Documentation of Steel Bank Common Lisp (SBCL) in info format.
 
-%description doc-info -l pl
+%description doc-info -l pl.UTF-8
 Dokumentacja Steel Bank Common Lisp (SBCL) w formacie info.
 
 %package doc-html
 Summary:	The Steel Bank Common Lisp documentation (HTML)
-Summary(pl):	Dokumentacja Steel Bank Common Lisp (HTML)
+Summary(pl.UTF-8):   Dokumentacja Steel Bank Common Lisp (HTML)
 Group:		Development/Languages
 
 %description doc-html
 Documentation of Steel Bank Common Lisp (SBCL) in HTML format.
 
-%description doc-html -l pl
+%description doc-html -l pl.UTF-8
 Dokumentacja Steel Bank Common Lisp (SBCL) w formacie HTML.
 
 %package doc-pdf
 Summary:	The Steel Bank Common Lisp documentation (PDF)
-Summary(pl):	Dokumentacja Steel Bank Common Lisp (PDF)
+Summary(pl.UTF-8):   Dokumentacja Steel Bank Common Lisp (PDF)
 Group:		Development/Languages
 
 %description doc-pdf
 Documentation of Steel Bank Common Lisp (SBCL) in PDF format.
 
-%description doc-pdf -l pl
+%description doc-pdf -l pl.UTF-8
 Dokumentacja Steel Bank Common Lisp (SBCL) w formacie PDF.
 
 %prep
