@@ -124,8 +124,8 @@ rm -rf $RPM_BUILD_ROOT
 %env_update
 
 %if %{with doc}
-%post doc-info
-[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+%post doc-info	-p	/sbin/postshell
+-/usr/sbin/fix-info-dir -c %{_infodir}
 
 %postun doc-info
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
