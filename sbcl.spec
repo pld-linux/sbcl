@@ -19,6 +19,7 @@ Source10:	http://download.sourceforge.net/sbcl/sbcl-1.0.58-x86-linux-binary.tar.
 # Source10-md5:	28104cfb0ee2ac67000c77b9518377e8
 Source11:	http://download.sourceforge.net/sbcl/sbcl-1.0.58-x86-64-linux-binary.tar.bz2
 # Source11-md5:	3d02edfdc851904d1d8dafeec20d1d06
+Patch0:		%{name}-tests.patch
 Patch1:		%{name}-threads.patch
 URL:		http://sbcl.sourceforge.net/
 %{?with_clisp:BuildRequires:	clisp}
@@ -78,6 +79,7 @@ Dokumentacja Steel Bank Common Lisp (SBCL) w formacie PDF.
 %ifarch %{x8664}
 %setup -q -a 11
 %endif
+%patch0 -p1
 %ifarch %{ix86} %{x8664}
 %patch1 -p1
 %endif
