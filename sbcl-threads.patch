@@ -1,9 +1,9 @@
 --- sbcl-0.9.10/base-target-features.lisp-expr.~1.38.~	2006-02-21 20:53:56.000000000 +0100
 +++ sbcl-0.9.10/base-target-features.lisp-expr	2006-03-13 21:12:30.000000000 +0100
 @@ -160,7 +160,7 @@
-  ;; and the %fs segment register.  Note that no consistent effort to
-  ;; audit the SBCL library code for thread safety has been performed,
-  ;; so caveat executor.
+  ;; As of SBCL 1.0.33.26, threads are part of the default build on
+  ;; x86oid Linux. Other platforms that support them include
+  ;; x86oid Darwin, FreeBSD, and Solaris.
 - ; :sb-thread
 + :sb-thread
  
