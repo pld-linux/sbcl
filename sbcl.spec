@@ -98,9 +98,7 @@ Dokumentacja Steel Bank Common Lisp (SBCL) w formacie PDF.
 %ifarch %{ix86} %{x8664}
 %patch1 -p1
 %endif
-%patch2 -p1 -b .orig
-cp -p doc/manual/sbcl.texinfo{,.patched}
-cp -p contrib/asdf/asdf.texinfo{,.patched}
+%patch2 -p1
 
 mkdir sbcl-bootstrap
 cd sbcl-*-linux
