@@ -1,0 +1,50 @@
+--- sbcl-1.3.10/doc/manual/Makefile.orig	2016-09-30 18:41:11.000000000 +0200
++++ sbcl-1.3.10/doc/manual/Makefile	2016-10-09 11:43:55.817597512 +0200
+@@ -93,7 +93,7 @@
+ info: $(INFOFILES)
+ 
+ %.info: %.texinfo $(DOCFILES) docstrings
+-	$(MAKEINFO) $(I_FLAGS) $<
++	$(MAKEINFO) --no-split $(I_FLAGS) $<
+ 
+ # Texinfo docstring snippets
+ # Note: assumes contrib module names are the same as the names of
+--- sbcl-1.3.10/doc/manual/sbcl.texinfo.orig	2016-09-30 18:41:11.000000000 +0200
++++ sbcl-1.3.10/doc/manual/sbcl.texinfo	2016-10-09 12:11:23.454244551 +0200
+@@ -11,9 +11,9 @@
+ @settitle SBCL @value{VERSION} User Manual
+ 
+ @c for install-info
+-@dircategory Software development
++@dircategory Programming Languages:
+ @direntry
+-* sbcl: (sbcl).           The Steel Bank Common Lisp compiler
++* sbcl: (sbcl).				The Steel Bank Common Lisp compiler
+ @end direntry
+ 
+ @copying
+--- sbcl-1.3.10/contrib/asdf/asdf.texinfo.orig	2016-09-30 18:41:11.000000000 +0200
++++ sbcl-1.3.10/contrib/asdf/asdf.texinfo	2016-10-09 12:12:16.280911379 +0200
+@@ -24,9 +24,9 @@
+ @end macro
+ 
+ @c for install-info
+-@dircategory Software development
++@dircategory Programming Languages:
+ @direntry
+-* asdf: (asdf).           Another System Definition Facility (for Common Lisp)
++* asdf: (asdf).				Another System Definition Facility (for Common Lisp)
+ @end direntry
+ 
+ @copying
+--- sbcl-1.3.10/tools-for-build/canonicalize-whitespace.lisp.orig	2016-09-30 18:41:12.000000000 +0200
++++ sbcl-1.3.10/tools-for-build/canonicalize-whitespace.lisp	2016-10-09 15:29:05.060776547 +0200
+@@ -86,7 +86,7 @@
+ 
+ ;;; Repository-level functions
+ 
+-(defvar *source-types* '("lisp" "lisp-expr" "c" "h" "asd" "texinfo"))
++(defvar *source-types* '("lisp" "lisp-expr" "c" "h" "asd"))
+ 
+ (defvar *exceptions* '("compile-file-pos-utf16be"))
+ 

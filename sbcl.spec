@@ -1,3 +1,4 @@
+# NOTE: tests >100 processes, so ensure proper ulimit
 #
 # Conditional build:
 %bcond_without	doc		# build without documentation
@@ -9,30 +10,44 @@
 Summary:	The Steel Bank Common Lisp development environment
 Summary(pl.UTF-8):	Środowisko programowania Steel Bank Common Lisp
 Name:		sbcl
-Version:	1.1.6
+Version:	1.3.10
 Release:	1
 License:	MIT
 Group:		Development/Languages
 Source0:	http://download.sourceforge.net/sbcl/%{name}-%{version}-source.tar.bz2
-# Source0-md5:	5daeabb9eaf7197006c4402bfc552d72
-Source10:	http://download.sourceforge.net/sbcl/sbcl-1.0.58-x86-linux-binary.tar.bz2
-# Source10-md5:	28104cfb0ee2ac67000c77b9518377e8
-Source11:	http://download.sourceforge.net/sbcl/sbcl-1.0.58-x86-64-linux-binary.tar.bz2
-# Source11-md5:	3d02edfdc851904d1d8dafeec20d1d06
+# Source0-md5:	c8bd43e149109127651a6917976dda4a
+Source10:	http://download.sourceforge.net/sbcl/sbcl-1.2.7-x86-linux-binary.tar.bz2
+# Source10-md5:	f6a1b2137fbc74b4a8aaf338643f4ae2
+Source11:	http://download.sourceforge.net/sbcl/sbcl-1.3.10-x86-64-linux-binary.tar.bz2
+# Source11-md5:	56fe67f916ccdd84e7b739d0a731cf9f
+# TODO (portability) - also available:
+#SourceXX:	http://download.sourceforge.net/sbcl/sbcl-1.3.10-arm64-linux-binary.tar.bz2
+#SourceXX:	http://download.sourceforge.net/sbcl/sbcl-1.3.9-armhf-linux-binary.tar.bz2
+#SourceXX:	http://download.sourceforge.net/sbcl/sbcl-1.2.7-armel-linux-binary.tar.bz2
+#SourceXX:	http://download.sourceforge.net/sbcl/sbcl-1.2.7-powerpc-linux-binary.tar.bz2
+#SourceXX:	http://download.sourceforge.net/sbcl/sbcl-1.0.23-mips-linux-binary.tar.bz2
+#SourceXX:	http://download.sourceforge.net/sbcl/sbcl-1.0.28-mipsel-linux-binary.tar.bz2
+#SourceXX:	http://download.sourceforge.net/sbcl/sbcl-1.0.28-alpha-linux-binary.tar.bz2
+#SourceXX:	http://download.sourceforge.net/sbcl/sbcl-1.0.28-sparc-linux-binary.tar.bz2
 Patch0:		%{name}-tests.patch
 Patch1:		%{name}-threads.patch
+Patch2:		%{name}-info.patch
 URL:		http://sbcl.sourceforge.net/
 %{?with_clisp:BuildRequires:	clisp}
 %if %{with doc}
 BuildRequires:	tetex-dvips
 BuildRequires:	texinfo-texi2dvi
 %endif
+%if %{without clisp}
+%{!?bootstrap_cl:ExclusiveArch:	%{ix86} %{x8664}}
+# also: %{arm} aarch64 alpha mips mipsel ppc sparc
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Steel Bank Common Lisp (SBCL) is a Open Source development environment
-for Common Lisp based on CMUCL. It includes an integrated native compiler,
-interpreter, and debugger.
+for Common Lisp based on CMUCL. It includes an integrated native
+compiler, interpreter, and debugger.
 
 %description -l pl.UTF-8
 Steel Bank Common Lisp (SBCL) to środowisko programistyczne Open
@@ -83,6 +98,9 @@ Dokumentacja Steel Bank Common Lisp (SBCL) w formacie PDF.
 %ifarch %{ix86} %{x8664}
 %patch1 -p1
 %endif
+%patch2 -p1 -b .orig
+cp -p doc/manual/sbcl.texinfo{,.patched}
+cp -p contrib/asdf/asdf.texinfo{,.patched}
 
 mkdir sbcl-bootstrap
 cd sbcl-*-linux
@@ -99,10 +117,9 @@ chmod 755 clean.sh
 %endif
 
 %build
-GNUMAKE="make"
-CFLAGS="%{rpmcflags}"
-CC="%{__cc}"
-export GNUMAKE CC CFLAGS
+export GNUMAKE="make"
+export CC="%{__cc}"
+export CFLAGS="%{rpmcflags}"
 export SBCL_HOME=`pwd`/sbcl-bootstrap/lib/sbcl
 export PATH=`pwd`/sbcl-bootstrap/bin:${PATH}
 ./make.sh \
@@ -110,7 +127,7 @@ export PATH=`pwd`/sbcl-bootstrap/bin:${PATH}
 	%{?bootstrap_cl}
 
 %if %{with doc}
-make -C doc/manual
+%{__make} -C doc/manual -j1
 %endif
 
 %install
@@ -148,16 +165,17 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc _install/share/doc/sbcl/[A-Z]*
-%attr (755,root,root) %{_bindir}/%{name}
+%doc _install/share/doc/sbcl/{BUGS,COPYING,CREDITS,NEWS}
+%attr (755,root,root) %{_bindir}/sbcl
 %{_libdir}/%{name}
-%{_mandir}/man1/*
-%config(noreplace,missingok) %verify(not md5 mtime size) /etc/env.d/*
+%{_mandir}/man1/sbcl.1*
+%config(noreplace,missingok) %verify(not md5 mtime size) /etc/env.d/SBCL_HOME
 
 %if %{with doc}
 %files doc-info
 %defattr(644,root,root,755)
-%{_infodir}/*.info*
+%{_infodir}/asdf.info*
+%{_infodir}/sbcl.info*
 
 %files doc-html
 %defattr(644,root,root,755)
