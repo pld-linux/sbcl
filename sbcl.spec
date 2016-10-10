@@ -3,6 +3,7 @@
 # Conditional build:
 %bcond_without	doc		# build without documentation
 %bcond_with	clisp		# build using clisp instead of sbcl
+%bcond_without	cl_controller	# common-lisp-controller support
 #
 # To build with an unpackaged Common Lisp implementation,
 # pass --define bootstrap_cl /path/to/lisp/binary to builder.
@@ -16,6 +17,9 @@ License:	MIT
 Group:		Development/Languages
 Source0:	http://download.sourceforge.net/sbcl/%{name}-%{version}-source.tar.bz2
 # Source0-md5:	c8bd43e149109127651a6917976dda4a
+Source1:	sbcl.sh
+Source2:	sbcl.rc
+Source3:	sbcl-install-clc.lisp
 Source10:	http://download.sourceforge.net/sbcl/sbcl-1.2.7-x86-linux-binary.tar.bz2
 # Source10-md5:	f6a1b2137fbc74b4a8aaf338643f4ae2
 Source11:	http://download.sourceforge.net/sbcl/sbcl-1.3.10-x86-64-linux-binary.tar.bz2
@@ -34,9 +38,14 @@ Patch1:		%{name}-threads.patch
 Patch2:		%{name}-info.patch
 URL:		http://sbcl.sourceforge.net/
 %{?with_clisp:BuildRequires:	clisp}
+%{?with_cl_controller:BuildRequires:	common-lisp-controller}
 %if %{with doc}
 BuildRequires:	tetex-dvips
 BuildRequires:	texinfo-texi2dvi
+%endif
+%if %{with cl_controller}
+Requires(post,preun):	common-lisp-controller
+Requires:	common-lisp-controller
 %endif
 %if %{without clisp}
 %{!?bootstrap_cl:ExclusiveArch:	%{ix86} %{x8664}}
@@ -144,14 +153,32 @@ env -u SBCL_HOME INSTALL_ROOT=`pwd`/_install %{_buildshell} ./install.sh
 
 echo SBCL_HOME=%{_libdir}/%{name} > $RPM_BUILD_ROOT/etc/env.d/SBCL_HOME
 
+%if %{with cl_controller}
+install -d $RPM_BUILD_ROOT{/usr/lib/common-lisp/bin,%{_sysconfdir}}
+%{__sed} -e 's,/usr/lib/sbcl,%{_libdir}/%{name},g' %{SOURCE1} >$RPM_BUILD_ROOT/usr/lib/common-lisp/bin/sbcl.sh
+install -Dp %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/sbcl.rc
+cp -p %{SOURCE3} $RPM_BUILD_ROOT%{_libdir}/%{name}/install-clc.lisp
+%{__mv} $RPM_BUILD_ROOT%{_libdir}/%{name}/sbcl.core $RPM_BUILD_ROOT%{_libdir}/%{name}/sbcl-dist.core
+touch $RPM_BUILD_ROOT%{_libdir}/%{name}/sbcl.core
+%endif
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
 %env_update
+%if %{with common_lisp_controller}
+/usr/sbin/register-common-lisp-implementation sbcl >/dev/null 2>&1 ||:
+%endif
 
 %postun
 %env_update
+
+%if %{with common_lisp_controller}
+if [ $1 -eq 0 ]; then
+    /usr/sbin/unregister-common-lisp-implementation sbcl >/dev/null 2>&1 ||:
+endif
+%endif
 
 %if %{with doc}
 %post doc-info	-p /sbin/postshell
@@ -165,9 +192,19 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc _install/share/doc/sbcl/{BUGS,COPYING,CREDITS,NEWS}
 %attr (755,root,root) %{_bindir}/sbcl
-%{_libdir}/%{name}
+%dir %{_libdir}/%{name}
+%{_libdir}/%{name}/contrib
 %{_mandir}/man1/sbcl.1*
 %config(noreplace,missingok) %verify(not md5 mtime size) /etc/env.d/SBCL_HOME
+%if %{with cl_controller}
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/sbcl.rc
+%attr(744,root,root) /usr/lib/common-lisp/bin/sbcl.sh
+%{_libdir}/%{name}/install-clc.lisp
+%{_libdir}/%{name}/sbcl-dist.core
+%ghost %{_libdir}/%{name}/sbcl.core
+%else
+%{_libdir}/%{name}/sbcl.core
+%endif
 
 %if %{with doc}
 %files doc-info
