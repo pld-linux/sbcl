@@ -167,16 +167,17 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 %env_update
-%if %{with common_lisp_controller}
+%if %{with cl_controller}
+test -f %{_libdir}/%{name}/sbcl.core || cp -p %{_libdir}/%{name}/sbcl-dist.core %{_libdir}/%{name}/sbcl.core
 /usr/sbin/register-common-lisp-implementation sbcl >/dev/null 2>&1 ||:
 %endif
 
 %postun
 %env_update
 
-%if %{with common_lisp_controller}
+%if %{with cl_controller}
 if [ $1 -eq 0 ]; then
-    /usr/sbin/unregister-common-lisp-implementation sbcl >/dev/null 2>&1 ||:
+	/usr/sbin/unregister-common-lisp-implementation sbcl >/dev/null 2>&1 ||:
 endif
 %endif
 
