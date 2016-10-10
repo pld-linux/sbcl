@@ -25,10 +25,10 @@ case $1 in
     echo $0 loading and dumping clc.
     ( cd /usr/lib/sbcl
          /usr/bin/sbcl \
-           --noinform --disable-ldb --disable-debugger \
+           --noinform --disable-ldb \
            --core /usr/lib/sbcl/sbcl-dist.core \
 	   --sysinit ${RCFILE} --no-userinit \
-	   --load "/usr/lib/sbcl/install-clc.lisp" # 2> /dev/null
+	   --load "/usr/lib/sbcl/install-clc.lisp" --non-interactive # 2> /dev/null
               (mv sbcl-new.core sbcl.core && touch sbcl.core --reference=sbcl-dist.core ) || (echo FAILED ; cp -a sbcl-dist.core sbcl.core ) )
     ;;
     remove-clc)
@@ -40,17 +40,17 @@ case $1 in
     shift
     echo rebuilding $1
     /usr/bin/sbcl \
-             --noinform --disable-ldb --disable-debugger \
+             --noinform --disable-ldb \
              --sysinit ${RCFILE} --no-userinit \
              --eval \
 "(handler-case
      (progn
        (asdf:operate 'asdf:compile-op (quote $1))
-       (sb-unix:unix-exit 0))
+       (sb-sys:os-exit 0))
     (error (e)
       (ignore-errors (format t \"~&Build error: ~A~%\" e))
       (finish-output)
-      (sb-unix:unix-exit 1)))" || build_error
+      (sb-sys:os-exit 1)))" --non-interactive || build_error
     ;;
      remove)
     echo $0 removing packages...

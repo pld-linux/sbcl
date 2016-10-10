@@ -178,7 +178,7 @@ test -f %{_libdir}/%{name}/sbcl.core || cp -p %{_libdir}/%{name}/sbcl-dist.core 
 %if %{with cl_controller}
 if [ $1 -eq 0 ]; then
 	/usr/sbin/unregister-common-lisp-implementation sbcl >/dev/null 2>&1 ||:
-endif
+fi
 %endif
 
 %if %{with doc}

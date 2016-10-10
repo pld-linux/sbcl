@@ -10,13 +10,13 @@
     (load "/usr/share/common-lisp/source/common-lisp-controller/common-lisp-controller.lisp")
   (error (e)
     (format t "~%Error during load of common-lisp-controller.lisp: ~A~%" e)
-    (sb-unix:unix-exit 1)))
+    (sb-sys:os-exit 1)))
 
 (handler-case
     (common-lisp-controller:init-common-lisp-controller-v4 "sbcl")
   (error (e)
     (format t "~%Error running init-common-lisp-controller-v4: ~A~%" e)
-    (sb-unix:unix-exit 1)))
+    (sb-sys:os-exit 1)))
 
 (when (probe-file #p"/etc/lisp.config")
   (load #p"/etc/lisp.config"))
