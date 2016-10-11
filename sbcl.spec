@@ -38,7 +38,6 @@ Patch1:		%{name}-threads.patch
 Patch2:		%{name}-info.patch
 URL:		http://sbcl.sourceforge.net/
 %{?with_clisp:BuildRequires:	clisp}
-%{?with_cl_controller:BuildRequires:	common-lisp-controller}
 %if %{with doc}
 BuildRequires:	tetex-dvips
 BuildRequires:	texinfo-texi2dvi
