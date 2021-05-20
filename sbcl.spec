@@ -134,6 +134,7 @@ chmod 755 clean.sh
 
 %build
 export GNUMAKE="make"
+export SBCL_MAKE_JOBS="%{_smp_mflags}"
 export CC="%{__cc}"
 export CFLAGS="%{rpmcflags}"
 %if %{with bootstrap}
