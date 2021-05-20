@@ -129,7 +129,7 @@ echo "#!/bin/sh" >clean.sh
 chmod 755 clean.sh
 
 %if %{with clisp}
-%define bootstrap_cl "clisp"
+%define bootstrap_cl clisp
 %endif
 
 %build
@@ -142,7 +142,7 @@ export PATH=`pwd`/sbcl-bootstrap/bin:${PATH}
 %endif
 ./make.sh \
 	--prefix=%{_prefix} \
-	%{?bootstrap_cl}
+	%{?bootstrap_cl:--xc-host=%{bootstrap_cl}}
 
 %if %{with doc}
 %{__make} -C doc/manual -j1
