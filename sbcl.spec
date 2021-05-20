@@ -1,6 +1,7 @@
 # NOTE: tests >100 processes, so ensure proper ulimit
 #
 # Conditional build:
+%bcond_with	bootstrap	# bootstrap build
 %bcond_without	doc		# build without documentation
 %bcond_with	clisp		# build using clisp instead of sbcl
 %bcond_without	cl_controller	# common-lisp-controller support
@@ -38,6 +39,9 @@ Patch1:		%{name}-threads.patch
 Patch2:		%{name}-info.patch
 URL:		http://sbcl.sourceforge.net/
 %{?with_clisp:BuildRequires:	clisp}
+%if %{without bootstrap} && %{without clisp}
+BuildRequires:	sbcl
+%endif
 %if %{with doc}
 BuildRequires:	tetex-dvips
 BuildRequires:	texinfo-texi2dvi
@@ -47,7 +51,7 @@ Requires(post,preun):	common-lisp-controller
 Requires:	common-lisp-controller
 %endif
 %if %{without clisp}
-%{!?bootstrap_cl:ExclusiveArch:	%{ix86} %{x8664}}
+%{?with_bootstrap:ExclusiveArch:	%{ix86} %{x8664}}
 # also: %{arm} aarch64 alpha mips mipsel ppc sparc
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -96,11 +100,15 @@ Documentation of Steel Bank Common Lisp (SBCL) in PDF format.
 Dokumentacja Steel Bank Common Lisp (SBCL) w formacie PDF.
 
 %prep
+%if %{with bootstrap}
 %ifarch %{ix86}
 %setup -q -a 10
 %endif
 %ifarch %{x8664}
 %setup -q -a 11
+%endif
+%else
+%setup -q
 %endif
 %patch0 -p1
 %ifarch %{ix86} %{x8664}
@@ -108,10 +116,12 @@ Dokumentacja Steel Bank Common Lisp (SBCL) w formacie PDF.
 %endif
 %patch2 -p1
 
+%if %{with bootstrap}
 mkdir sbcl-bootstrap
 cd sbcl-*-linux
 INSTALL_ROOT=`pwd`/../sbcl-bootstrap sh ./install.sh
 cd -
+%endif
 
 # clean.sh is so stupid it removed sbcl-bootstrap contents
 %{__mv} clean.sh clean.sh.orig
@@ -126,8 +136,10 @@ chmod 755 clean.sh
 export GNUMAKE="make"
 export CC="%{__cc}"
 export CFLAGS="%{rpmcflags}"
+%if %{with bootstrap}
 export SBCL_HOME=`pwd`/sbcl-bootstrap/lib/sbcl
 export PATH=`pwd`/sbcl-bootstrap/bin:${PATH}
+%endif
 ./make.sh \
 	--prefix=%{_prefix} \
 	%{?bootstrap_cl}
