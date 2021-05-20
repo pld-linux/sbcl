@@ -8,7 +8,7 @@
 +	$(MAKEINFO) --no-split $(I_FLAGS) $<
  
  # Texinfo docstring snippets
- # Note: assumes contrib module names are the same as the names of
+ docstrings variables.texinfo: tempfiles-stamp
 --- sbcl-1.3.10/doc/manual/sbcl.texinfo.orig	2016-09-30 18:41:11.000000000 +0200
 +++ sbcl-1.3.10/doc/manual/sbcl.texinfo	2016-10-09 12:11:23.454244551 +0200
 @@ -11,9 +11,9 @@

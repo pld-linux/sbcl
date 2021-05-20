@@ -12,19 +12,19 @@
 Summary:	The Steel Bank Common Lisp development environment
 Summary(pl.UTF-8):	Środowisko programowania Steel Bank Common Lisp
 Name:		sbcl
-Version:	1.3.10
+Version:	2.1.4
 Release:	1
 License:	MIT
 Group:		Development/Languages
 Source0:	http://download.sourceforge.net/sbcl/%{name}-%{version}-source.tar.bz2
-# Source0-md5:	c8bd43e149109127651a6917976dda4a
+# Source0-md5:	dab60bd97609524a69184651b1ce3d27
 Source1:	sbcl.sh
 Source2:	sbcl.rc
 Source3:	sbcl-install-clc.lisp
 Source10:	http://download.sourceforge.net/sbcl/sbcl-1.2.7-x86-linux-binary.tar.bz2
 # Source10-md5:	f6a1b2137fbc74b4a8aaf338643f4ae2
-Source11:	http://download.sourceforge.net/sbcl/sbcl-1.3.10-x86-64-linux-binary.tar.bz2
-# Source11-md5:	56fe67f916ccdd84e7b739d0a731cf9f
+Source11:	http://download.sourceforge.net/sbcl/sbcl-2.1.4-x86-64-linux-binary.tar.bz2
+# Source11-md5:	8d13c4827812faba6d52313860192004
 # TODO (portability) - also available:
 #SourceXX:	http://download.sourceforge.net/sbcl/sbcl-1.3.10-arm64-linux-binary.tar.bz2
 #SourceXX:	http://download.sourceforge.net/sbcl/sbcl-1.3.9-armhf-linux-binary.tar.bz2
@@ -214,6 +214,7 @@ fi
 %attr(744,root,root) /usr/lib/common-lisp/bin/sbcl.sh
 %{_libdir}/%{name}/install-clc.lisp
 %{_libdir}/%{name}/sbcl-dist.core
+%{_libdir}/%{name}/sbcl.mk
 %ghost %{_libdir}/%{name}/sbcl.core
 %else
 %{_libdir}/%{name}/sbcl.core
