@@ -21,8 +21,8 @@ Source0:	http://download.sourceforge.net/sbcl/%{name}-%{version}-source.tar.bz2
 Source1:	sbcl.sh
 Source2:	sbcl.rc
 Source3:	sbcl-install-clc.lisp
-Source10:	http://download.sourceforge.net/sbcl/sbcl-1.2.7-x86-linux-binary.tar.bz2
-# Source10-md5:	f6a1b2137fbc74b4a8aaf338643f4ae2
+Source10:	http://download.sourceforge.net/sbcl/sbcl-1.4.3-x86-linux-binary.tar.bz2
+# Source10-md5:	1c022d7ac6a8154de9ae09eb9ecfc696
 Source11:	http://download.sourceforge.net/sbcl/sbcl-2.1.4-x86-64-linux-binary.tar.bz2
 # Source11-md5:	8d13c4827812faba6d52313860192004
 Source12:	http://download.sourceforge.net/sbcl/sbcl-1.4.2-arm64-linux-binary.tar.bz2
