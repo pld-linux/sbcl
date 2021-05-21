@@ -16,16 +16,16 @@ Version:	2.1.4
 Release:	1
 License:	MIT
 Group:		Development/Languages
-Source0:	http://download.sourceforge.net/sbcl/%{name}-%{version}-source.tar.bz2
+Source0:	https://download.sourceforge.net/sbcl/%{name}-%{version}-source.tar.bz2
 # Source0-md5:	dab60bd97609524a69184651b1ce3d27
 Source1:	sbcl.sh
 Source2:	sbcl.rc
 Source3:	sbcl-install-clc.lisp
-Source10:	http://download.sourceforge.net/sbcl/sbcl-1.4.3-x86-linux-binary.tar.bz2
+Source10:	https://download.sourceforge.net/sbcl/sbcl-1.4.3-x86-linux-binary.tar.bz2
 # Source10-md5:	1c022d7ac6a8154de9ae09eb9ecfc696
-Source11:	http://download.sourceforge.net/sbcl/sbcl-2.1.4-x86-64-linux-binary.tar.bz2
+Source11:	https://download.sourceforge.net/sbcl/sbcl-2.1.4-x86-64-linux-binary.tar.bz2
 # Source11-md5:	8d13c4827812faba6d52313860192004
-Source12:	http://download.sourceforge.net/sbcl/sbcl-1.4.2-arm64-linux-binary.tar.bz2
+Source12:	https://download.sourceforge.net/sbcl/sbcl-1.4.2-arm64-linux-binary.tar.bz2
 # Source12-md5:	79a1d4624a8138564be96274707c180d
 # TODO (portability) - also available:
 #SourceXX:	http://download.sourceforge.net/sbcl/sbcl-1.3.9-armhf-linux-binary.tar.bz2
