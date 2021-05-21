@@ -38,6 +38,7 @@ Source12:	http://download.sourceforge.net/sbcl/sbcl-1.4.2-arm64-linux-binary.tar
 Patch0:		%{name}-tests.patch
 Patch1:		%{name}-threads.patch
 Patch2:		%{name}-info.patch
+Patch3:		%{name}-libpath.patch
 URL:		http://sbcl.sourceforge.net/
 %{?with_clisp:BuildRequires:	clisp}
 %if %{without bootstrap} && %{without clisp}
@@ -119,6 +120,7 @@ Dokumentacja Steel Bank Common Lisp (SBCL) w formacie PDF.
 %patch1 -p1
 %endif
 %patch2 -p1
+%patch3 -p1
 
 %if %{with bootstrap}
 mkdir sbcl-bootstrap
@@ -141,7 +143,7 @@ export GNUMAKE="make"
 export SBCL_MAKE_JOBS="%{_smp_mflags}"
 export CC="%{__cc}"
 export CFLAGS="%{rpmcflags}"
-export CPPFLAGS="%{rpmcppflags}"
+export CPPFLAGS="%{rpmcppflags} -DSBCL_LIBPATH=\\\"../%{_lib}/sbcl\\\""
 export LDFLAGS="%{rpmldflags}"
 %if %{with bootstrap}
 export SBCL_HOME=`pwd`/sbcl-bootstrap/lib/sbcl

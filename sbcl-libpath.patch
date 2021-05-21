@@ -1,0 +1,11 @@
+--- sbcl-2.1.4/src/runtime/runtime.c.orig	2021-05-21 15:06:10.340957679 +0200
++++ sbcl-2.1.4/src/runtime/runtime.c	2021-05-21 15:06:24.710852344 +0200
+@@ -66,7 +66,7 @@
+ 
+ struct timespec lisp_init_time;
+ 
+-static char libpath[] = "../lib/sbcl";
++static char libpath[] = SBCL_LIBPATH;
+ char *sbcl_runtime_home;
+ char *sbcl_runtime;
+ 
