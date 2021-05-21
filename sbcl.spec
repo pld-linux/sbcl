@@ -25,8 +25,9 @@ Source10:	http://download.sourceforge.net/sbcl/sbcl-1.2.7-x86-linux-binary.tar.b
 # Source10-md5:	f6a1b2137fbc74b4a8aaf338643f4ae2
 Source11:	http://download.sourceforge.net/sbcl/sbcl-2.1.4-x86-64-linux-binary.tar.bz2
 # Source11-md5:	8d13c4827812faba6d52313860192004
+Source12:	http://download.sourceforge.net/sbcl/sbcl-1.4.2-arm64-linux-binary.tar.bz2
+# Source12-md5:	79a1d4624a8138564be96274707c180d
 # TODO (portability) - also available:
-#SourceXX:	http://download.sourceforge.net/sbcl/sbcl-1.3.10-arm64-linux-binary.tar.bz2
 #SourceXX:	http://download.sourceforge.net/sbcl/sbcl-1.3.9-armhf-linux-binary.tar.bz2
 #SourceXX:	http://download.sourceforge.net/sbcl/sbcl-1.2.7-armel-linux-binary.tar.bz2
 #SourceXX:	http://download.sourceforge.net/sbcl/sbcl-1.2.7-powerpc-linux-binary.tar.bz2
@@ -51,8 +52,8 @@ Requires(post,preun):	common-lisp-controller
 Requires:	common-lisp-controller
 %endif
 %if %{without clisp}
-%{?with_bootstrap:ExclusiveArch:	%{ix86} %{x8664}}
-# also: %{arm} aarch64 alpha mips mipsel ppc sparc
+%{?with_bootstrap:ExclusiveArch:	%{ix86} %{x8664} aarch64}
+# also: %{arm} alpha mips mipsel ppc sparc
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -106,6 +107,9 @@ Dokumentacja Steel Bank Common Lisp (SBCL) w formacie PDF.
 %endif
 %ifarch %{x8664}
 %setup -q -a 11
+%endif
+%ifarch aarch64
+%setup -q -a 12
 %endif
 %else
 %setup -q
