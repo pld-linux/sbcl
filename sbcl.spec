@@ -141,10 +141,13 @@ export GNUMAKE="make"
 export SBCL_MAKE_JOBS="%{_smp_mflags}"
 export CC="%{__cc}"
 export CFLAGS="%{rpmcflags}"
+export CPPFLAGS="%{rpmcppflags}"
+export LDFLAGS="%{rpmldflags}"
 %if %{with bootstrap}
 export SBCL_HOME=`pwd`/sbcl-bootstrap/lib/sbcl
 export PATH=`pwd`/sbcl-bootstrap/bin:${PATH}
 %endif
+%{__sed} -i -e 's/^CFLAGS/#CFLAGS/' src/runtime/GNUmakefile
 ./make.sh \
 	--prefix=%{_prefix} \
 	%{?bootstrap_cl:--xc-host=%{bootstrap_cl}}
