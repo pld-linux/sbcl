@@ -7,5 +7,5 @@
 - ; :sb-thread
 + :sb-thread
  
-  ;; Support for detection of unportable code (when applied to the
-  ;; COMMON-LISP package, or SBCL-internal pacakges) or bad-neighbourly
+  ;; futex support
+  ;;
