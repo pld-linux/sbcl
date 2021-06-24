@@ -48,6 +48,7 @@ BuildRequires:	sbcl
 BuildRequires:	tetex-dvips
 BuildRequires:	texinfo-texi2dvi
 %endif
+%{?with_bootstrap:BuildConflicts:	sbcl}
 %if %{with cl_controller}
 Requires(post,preun):	common-lisp-controller
 Requires:	common-lisp-controller
