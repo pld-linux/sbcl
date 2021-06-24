@@ -2,7 +2,7 @@
 #
 # Conditional build:
 %bcond_with	bootstrap	# bootstrap build
-%bcond_without	doc		# build without documentation
+%bcond_with	doc		# build with documentation
 %bcond_with	clisp		# build using clisp instead of sbcl
 %bcond_without	cl_controller	# common-lisp-controller support
 #
