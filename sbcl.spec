@@ -116,12 +116,12 @@ Dokumentacja Steel Bank Common Lisp (SBCL) w formacie PDF.
 %else
 %setup -q
 %endif
-%patch0 -p1
+%patch -P0 -p1
 %ifarch %{ix86} %{x8664}
-%patch1 -p1
+%patch -P1 -p1
 %endif
-%patch2 -p1
-%patch3 -p1
+%patch -P2 -p1
+%patch -P3 -p1
 
 %if %{with bootstrap}
 mkdir sbcl-bootstrap
